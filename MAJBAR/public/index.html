@@ -1,13 +1,43 @@
+<!DOCTYPE html>
 <html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style-login.css' />
+  </head>
+  <body>
+    <div>
+        <div>
 
-<head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
+          <div class="container-signin">
+            <div class="signin-content">
+                <div class="signin-image">
+                    <figure><img src="images/singin.jpg" alt="sing up image"></figure>
+                    <a href="signUp" class="signup-image-link">Create an account</a>
+                </div>
 
-<body>
-  <h1>Express</h1>
-  <p>Welcome to Express</p>
-</body>
-
+                <div class="signin-form">
+                    <h2 class="form-title">Sign in</h2>
+                    <form action="/auth" method="POST" class="register-form" id="login-form">
+                        <div class="form-group">
+                            <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="username" id="username" placeholder="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                            <input type="password" name="pass" id="pass" placeholder="Password">
+                        </div>
+                        <div class="form-group form-button">
+                            <input type="submit" name="signin" id="signin" class="form-submit" value="Log in">
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    
+        </div>
+    </div>
+    <script src ="javascripts/jquery.min.js"></script>
+  </body>
 </html>
