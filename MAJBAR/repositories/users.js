@@ -1,7 +1,10 @@
 const { User } = require('../models')
+const moment = require('moment')
 module.exports = {
   getAllUsers() {
-    return User.findAll()
+    return User.findAll({
+      attributes: ['id', 'username', 'email', 'role']
+    })
   },
   // méthodes à implémenter
   getUsers(offset = 0, limit = 10) { 
@@ -31,35 +34,60 @@ module.exports = {
       });
       return x
    }, 
-  getUser(id) { 
-    var x= User.findAll({
+  async getUser(id) { 
+    return await User.findOne({
     where: {       
-        id: id
-    }
-  });
-  return x },
-  getUserByEmail(email) { 
-    var x= User.findAll({
-    where: {       
-      email: email 
-    }
+        id
+    },
+    attributes: ['id', 'username', 'email', 'role']
     });
-    return x },
+  },
+  async getUserByEmail(email) { 
+    return await User.findOne({
+      where: {       
+        email 
+      },
+      attributes: ['id', 'username', 'email', 'role']
+    });
+    },
     async addUser(user) { 
-    await User.create(user);
+      const created = await User.create({username: user.username, email: user.email,
+              password: user.password, role: user.role,
+              createdAt : moment().format("YYYY/MM/DD h:mm:ss"),
+              updatedAt : moment().format("YYYY/MM/DD h:mm:ss"),
+      });
+      let data = {}
+      if (created != null){
+        data.id = created.id
+        data.username =  created.username
+        data.email = created.email
+        data.role = created.role
+      }
+      return data
    },
-   async updateUser() { 
-    await User.update(user, {
+   async updateUser(user) {
+    const __user = await this.getUserByEmail(user.email)
+    console.log(__user)
+    if (__user == null) return "can't update user"
+    try{
+      const updated = await User.update(user, {
         where: {
-          id: id
+          id: __user.id
         }
       });
+      if (updated == 1) return user;
+      else throw new Error()
+    } catch(error){
+      return "can't update this user"
+    }
+
    },
-   async deleteUser() { 
-      await User.destroy({
+   async deleteUser(id) { 
+      return await User.destroy({
         where: {
-        id: id
-        }
+          id
+        },
+        attributes:['id', 'username', 'email', 'role']
     }); },
   // D'autres méthodes jugées utiles
 }
