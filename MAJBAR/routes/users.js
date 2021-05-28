@@ -1,5 +1,6 @@
  const router = require('express').Router();
  const usersRepo = require('../repositories/users')
+ const ArticleRepo = require('../repositories/articles')
 
  /* GET users listing. */
 router.get('/', async function(req, res, next) {
@@ -8,6 +9,10 @@ router.get('/', async function(req, res, next) {
 
 router.get('/:id', async function(req, res, next) {
   res.send(await usersRepo.getUser(req.params.id));
+});
+
+router.get('/:id/articles', async function(req, res, next) {
+  res.send(await ArticleRepo.getUserArticles(req.params.id));
 });
 
 router.post('/', async function(req, res, next) {

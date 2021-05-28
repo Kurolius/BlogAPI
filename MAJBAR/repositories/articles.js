@@ -18,6 +18,14 @@ var sequelize = require('sequelize');
     });
     return x
     },
+    getUserArticles(id) {
+      var x= Article.findAll({
+        where: {       
+          UserId: id
+        }
+      });
+      return x
+      },
 
 
     async addArticle(Article) { 

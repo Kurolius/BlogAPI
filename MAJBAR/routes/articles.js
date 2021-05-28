@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const articleRepo = require('../repositories/articles')
+const commsRepo = require('../repositories/comments')
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
   var usersList=res.send(await articleRepo.getAllArticles())
@@ -7,6 +8,10 @@ router.get('/', async function(req, res, next) {
 
 router.get('/:id', async function(req, res, next) {
   res.send(await articleRepo.getArticlesById(req.params.id));
+});
+
+router.get('/:id/comments', async function(req, res, next) {
+  res.send(await commsRepo.getArticleComments(req.params.id));
 });
 
 router.post('/', async function(req, res, next) {

@@ -16,6 +16,14 @@ const { Comment } = require('../models')
     });
     return x
     },
+    getArticleComments(id) {
+      var x= Comment.findAll({
+        where: {       
+          ArticleId: id
+        }
+      });
+      return x
+      },
 
     getPostComments(id) {
       var x= Comment.findAll({
