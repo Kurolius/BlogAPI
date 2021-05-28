@@ -14,8 +14,10 @@ router.post('/', async function(req, res, next) {
   let user = {}
   user.username = req.body.username
   user.email = req.body.email
+  user.password = req.body.password
   user.role = req.body.role
-  res.send(await usersRepo.addUser(user));
+  await usersRepo.addUser(user);
+  res.redirect("/");
 });
 
 router.put('/', async function(req, res, next) {
@@ -26,8 +28,11 @@ router.put('/', async function(req, res, next) {
   res.send(await usersRepo.updateUser(user));
 });
 
-router.delete('/:id', async function(req, res, next){
-  res.send(await usersRepo.deleteUser(id));
+router.delete('/', async function(req, res, next){
+  let user= req.body.id
+  console.log(user)
+  await usersRepo.deleteUser(user);
+  res.redirect("/");
 })
 
 module.exports = router;

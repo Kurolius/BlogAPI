@@ -85,7 +85,7 @@ module.exports = {
    async deleteUser(id) { 
       return await User.destroy({
         where: {
-          id
+          id:id
         },
         attributes:['id', 'username', 'email', 'role']
     }); },
