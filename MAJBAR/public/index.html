@@ -57,7 +57,7 @@
               
                     </tbody>
                   </table>
-                  <button onclick="DisplayUsers(); this.onclick=null;">Display all</button>
+                  <button onclick="DisplayUsers();  ">Display all</button>
             </div>
         </div>
     </div>
@@ -70,8 +70,8 @@
                       <input type="text" name="idm" id="idm" placeholder="User Id"/>
         
                    
-                      <button onclick="DisplayUser(); this.onclick=null;">Display User</button>
-                      <button onclick="deleteUser(); this.onclick=null;"> Delete User </button>
+                      <button onclick="DisplayUser();">Display User</button>
+                      <button onclick="deleteUser();"> Delete User </button>
 
                     </div>
             </div>
@@ -92,22 +92,25 @@
           getUser();
         }
         async function getUsers() {
+          console.log("ok1")
             let response = await fetch(URL);
             let data = await response.text();
             let obj = JSON.parse(data);
+            document.getElementById('all').innerHTML =''; 
             obj.map(item=>{
-              document.getElementById('all').innerHTML+='<tr><td>'+item.id+'</td><td>'+item.username+'</td><td>'+item.email+'</td><td>'+item.role+'</td></tr>'
+              document.getElementById('all').innerHTML +='<tr><td>'+item.id+'</td><td>'+item.username+'</td><td>'+item.email+'</td><td>'+item.role+'</td></tr>'
             })
           }
     
         async function getUser() {
+            console.log("ok1")
             let id = document.querySelector("#idm").value
             if (id){
               let response = await fetch(`${URL}${id}`);
-              console.log (response)
               let data = await response.text();
               let item = JSON.parse(data);
-              document.getElementById('all').innerHTML+='<tr><td>'+item.id+'</td><td>'+item.username+'</td><td>'+item.email+'</td><td>'+item.role+'</td></tr>'
+              document.getElementById('all').innerHTML =''; 
+              document.getElementById('all').innerHTML='<tr><td>'+item.id+'</td><td>'+item.username+'</td><td>'+item.email+'</td><td>'+item.role+'</td></tr>'
             }else{
               document.getElementById('row').innerHTML='<div class="alert alert-warning mt-3" role="alert">Please specify the ID</div>'
             }
@@ -125,6 +128,7 @@
             .then(response => response.json()) 
             .then(json => console.log(json))
             .catch(err => console.log(err));
+            DisplayUsers();
         }
     
     
