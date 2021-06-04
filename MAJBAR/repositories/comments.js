@@ -1,10 +1,16 @@
 const { Comment } = require('../models')
+const { Article } = require('../models')  
+var sequelize = require('sequelize');
  module.exports = {
    getAllComments() {
-     return Comment.findAll()
+     return Article.findAll({
+      group : ['Article.id'],
+      attributes: ['title', [sequelize.fn('COUNT', 'Comments.id'), 'NbrComments']],
+      include: { model: Comment,attributes: []}
+    });
    },
    getComments(offset = 0, limit = 10){
-    return  sequelize.query("SELECT * FROM Comments LIMIT "+ limit +" OFFSET "+offset)
+    return  Comment.findAll({ offset: offset, limit: limit })
   } ,
 
 

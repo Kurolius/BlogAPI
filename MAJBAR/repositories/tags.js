@@ -5,7 +5,7 @@ const { Tag } = require('../models')
    },
    // méthodes à implémenter
    getTags(offset = 0, limit = 10){
-    return  sequelize.query("SELECT * FROM Tags LIMIT "+ limit +" OFFSET "+offset)
+    return  Tag.findAll({ offset: offset, limit: limit })
   } ,
 
 

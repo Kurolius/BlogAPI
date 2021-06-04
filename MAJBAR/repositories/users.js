@@ -8,7 +8,7 @@ module.exports = {
   },
   // méthodes à implémenter
   getUsers(offset = 0, limit = 10) { 
-    return sequelize.query("SELECT * FROM Users LIMIT "+ limit +" OFFSET "+offset)
+    return User.findAll({ offset: offset, limit: limit })
   },
   getAdmins() { 
     var x= User.findAll({
