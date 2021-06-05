@@ -20,8 +20,15 @@ router.post('/', async function(req, res, next) {
   user.username = req.body.username
   user.email = req.body.email
   user.password = req.body.password
-  user.role = req.body.role
+  user.role = "guest"
   await usersRepo.addUser(user);
+  res.redirect("/");
+});
+router.post('/signin', async function(req, res, next) {
+  let user = {}
+  user.username = req.body.username
+  user.password = req.body.password
+  //await usersRepo.addUser(user); change to verife user
   res.redirect("/");
 });
 
