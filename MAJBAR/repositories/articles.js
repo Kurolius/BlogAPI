@@ -5,6 +5,10 @@ var sequelize = require('sequelize');
      return Article.findAll()
    },
    // méthodes à implémenter
+
+  async countarticle(){
+    return await Article.count();
+  },
    getArticles(offset = 0, limit = 10){
     return  Article.findAll({ offset: offset, limit: limit });
   } ,

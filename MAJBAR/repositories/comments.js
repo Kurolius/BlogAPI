@@ -9,11 +9,24 @@ var sequelize = require('sequelize');
       include: { model: Comment,attributes: []}
     });
    },
+   countComments(offset = 0, limit = 10) {
+    return Article.findAll({
+     group : ['Article.id'],
+     attributes: ['title','content', [sequelize.fn('COUNT', 'Comments.id'), 'NbrComments']],
+     include: { model: Comment,attributes: []}
+   });
+  },
    getComments(offset = 0, limit = 10){
     return  Comment.findAll({ offset: offset, limit: limit })
   } ,
 
-
+  async countArticle(ida){
+    return await Comment.count({
+      where:  {
+        id:ida 
+      }
+    });
+  },
    getComments(id) {
     var x= Comment.findAll({
       where: {       
