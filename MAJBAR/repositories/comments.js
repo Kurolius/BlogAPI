@@ -12,7 +12,7 @@ var sequelize = require('sequelize');
    countComments(offset = 0, limit = 10) {
     return Article.findAll({
      group : ['Article.id'],
-     attributes: ['title','content', [sequelize.fn('COUNT', 'Comments.id'), 'NbrComments']],
+     attributes: ['id','title','content', [sequelize.fn('COUNT', 'Comments.id'), 'NbrComments']],
      include: { model: Comment,attributes: []}
    });
   },

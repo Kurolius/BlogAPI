@@ -17,6 +17,9 @@ body{
 .nav{
   padding: 20px;
 }
+.nav-link:hover {
+  color: #8F00FF;
+}
 .container{
   background-color: white;
   padding: 30px;
@@ -35,7 +38,7 @@ body{
 }
 
 .text-navy {
-    color: #1ab394;
+    color: #220022;
 }
 .mid-icon {
     font-size: 66px !important;
@@ -85,10 +88,10 @@ a.forum-item-title:hover {
   color: #9b9b9b;
 }
 .forum-item.active .fa {
-  color: #1ab394;
+  color: #220022;
 }
 .forum-item.active a.forum-item-title {
-  color: #1ab394;
+  color: #220022;
 }
 .pagination {
   display: inline-block;

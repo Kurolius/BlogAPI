@@ -14,16 +14,14 @@
             let res = await fetch('http://localhost:3000/articles/count');
              count = await res.status;
             document.getElementById('count').innerHTML +="<samll>Total posts: "+ count +"</samll>";
-            response = await fetch('http://localhost:3000/articles/countComm');
+            let response = await fetch('http://localhost:3000/articles/countComm');
             data = await response.text()
             let obj = JSON.parse(data);
             let cpt=1;
 
             obj.map( item=>{
               if(cpt >= offset && cpt <= limit ){
-                console.log(cpt);
-                console.log(offset);
-                document.getElementById('lstArticle').innerHTML +='<div class="row"> <div class="col-md-9"> <div class="forum-icon"> <i class="fa fa-shield"></i> </div> <a class="forum-item-title">'+item.title+'</a> <div class="forum-sub-title">'+item.content+'</div> </div> <div class="col-md-1 forum-info"> <span class="views-number"> '+item.NbrComments+' </span> <div> <small>Comments</small> </div> </div>  </div> <br>';
+                document.getElementById('lstArticle').innerHTML +='<div class="row"> <div class="col-md-9"> <div class="forum-icon"> <i class="fa fa-shield"></i> </div> <a class="forum-item-title" onclick="getArticleWithComm('+item.id+')">'+item.title+'</a> <div class="forum-sub-title">'+item.content+'</div> </div> <div class="col-md-1 forum-info"> <span class="views-number"> '+item.NbrComments+' </span> <div> <small>Comments</small> </div> </div>  </div> <br>';
                 
               }
               cpt++;
@@ -55,6 +53,27 @@
             document.getElementById('pad'+localPage).classList.add("active");
             document.getElementById('pad'+lastpage).classList.remove("active");
           }
+          async function getArticleWithComm(id){
+            let response = await fetch('http://localhost:3000/articles/'+id );
+            let data = await response.text()
+            let obj = JSON.parse(data);
+            console.log(obj);
+            document.getElementById('lstArticle').innerHTML='<a class="forum-item-title" onclick="setpage('+localPage+')"> << Back </a> <br> <br>';
+            document.getElementById('padding').innerHTML='';
+            obj.map( item=>{
+                document.getElementById('lstArticle').innerHTML +='<div class="row"> <div class="col-md-9"> <div class="forum-icon"> <i class="fa fa-shield"></i> </div> <a class="forum-item-title" onclick="getArticleWithComm('+item.id+')">'+item.title+'</a> <div class="forum-sub-title">'+item.content+'</div> </div>   </div> <br>';
+              
+            })
+            response = await fetch('http://localhost:3000/articles/'+id+'/comments');
+            data = await response.text()
+            obj = JSON.parse(data);
+            console.log(obj);
+            document.getElementById('lstArticle').innerHTML+='<h4> Comments </h4> ';
+            obj.map( item=>{
+                document.getElementById('lstArticle').innerHTML +='<div class="row"> <div class="col-md-9"> <div class="forum-icon"> <i class="fa fa-comment"></i> </div> <div class="forum-sub-title">'+item.content+' </div><br>';
+              
+            })
+          }
     </script>
 </head>
   <body>
@@ -64,7 +83,7 @@
         <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Blog</button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Categories</button>
+        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Authentification</button>
       </li>
       <li class="nav-item" role="presentation">
         <button class="nav-link disabled" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Admin Panel</button>
@@ -109,7 +128,43 @@
           </div>
           </div>
       </div>
-      <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
+      <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+        <div class="container">
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="wrapper wrapper-content animated fadeInRight">
+          
+                      <div class="ibox-content m-b-sm border-bottom">
+                          <div class="p-xs">
+                              <div class="pull-left m-r-md">
+                                  <i class="fa fa-globe text-navy mid-icon"></i>
+                              </div>
+                              <h2>Welcome </h2>
+                              <span>Feel free to choose topic you're interested in</span>
+                          </div>
+                      </div>
+          
+                      <div class="ibox-content forum-container">
+          
+                          <div class="forum-title">
+                              <div id="count" class="pull-right forum-desc">
+                                  
+                              </div>
+                              <h3> Authentification </h3>
+                          </div>
+          
+                          <div id="Categories" class="forum-item active">                              
+                            <script> </script>
+                          </div>
+                          <div id="padding" class="pagination">
+                          </div>
+          
+                      </div>
+                  </div>
+              </div>
+          </div>
+          </div>
+      </div>
       <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
     </div>
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
