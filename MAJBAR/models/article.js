@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   Article.init({
     title: {
       type: DataTypes.STRING,
-      unique: true
+      unique: false
     },
     content: DataTypes.TEXT,
     published: {
